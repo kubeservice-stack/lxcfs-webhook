@@ -32,6 +32,11 @@ jobs:
             image: dongjiang1989/lxcfs:v3.1.2
             file: ./hack/build/Dockerfile.lxcfs
             platforms: linux/amd64,linux/arm64
+          -
+            name: lxcfs-webhook
+            image: dongjiang1989/lxcfs-webhook:latest
+            file: ./hack/build/Dockerfile.webhook
+            platforms: linux/amd64,linux/arm64
 
     steps:
       - 
