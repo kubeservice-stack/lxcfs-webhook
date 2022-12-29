@@ -265,7 +265,7 @@ func createPodPatch(pod *corev1.Pod) ([]byte, error) {
 	} else {
 		op.Op = "add"
 		if pod.Annotations[common.AdmissionWebhookAnnotationStatusKey] != "" {
-			op.Op = " replace"
+			op.Op = "replace"
 		}
 		op.Path = "/metadata/annotations/" + escapeJSONPointerValue(common.AdmissionWebhookAnnotationStatusKey)
 		op.Value = "mutated"
