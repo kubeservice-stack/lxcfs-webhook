@@ -18,7 +18,7 @@ spec:
       serviceAccountName: lxcfs-webhook-serviceaccount
       containers:
         - name: lxcfs-admission-webhook
-          image: registry.cn-hangzhou.aliyuncs.com/denverdino/lxcfs-admission-webhook:v1
+          image: dongjiang1989/lxcfs-webhook:latest
           imagePullPolicy: Always
           args:
             - -tlsCertFile=/etc/webhook/certs/tls.crt
