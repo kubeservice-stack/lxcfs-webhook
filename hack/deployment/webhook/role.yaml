@@ -1,0 +1,15 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: kube-system
+  name: lxcfs-webhook-role
+rules:
+- apiGroups: ["admissionregistration.k8s.io"]
+  resources: ["mutatingwebhookconfigurations", "validatingwebhookconfigurations"]
+  verbs: ["get"]
+- apiGroups: ["app/v1"]
+  resources: ["node"]
+  verbs: ["get"]
+- apiGroups: ["v1"]
+  resources: ["pod"]
+  verbs: ["get"]

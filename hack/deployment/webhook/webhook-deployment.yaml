@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lxcfs-admission-webhook-deployment
+  namespace: kube-system
+  labels:
+    app: lxcfs-admission-webhook
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lxcfs-admission-webhook
+  template:
+    metadata:
+      labels:
+        app: lxcfs-admission-webhook
+    spec:
+      serviceAccountName: lxcfs-webhook-serviceaccount
+      containers:
+        - name: lxcfs-admission-webhook
+          image: registry.cn-hangzhou.aliyuncs.com/denverdino/lxcfs-admission-webhook:v1
+          imagePullPolicy: Always
+          args:
+            - -tlsCertFile=/etc/webhook/certs/tls.crt
+            - -tlsKeyFile=/etc/webhook/certs/tls.key
+            - -alsologtostderr
+            - -v=4
+            - 2>&1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 128Mi
+            requests:
+              cpu: 10m
+              memory: 64Mi
+          volumeMounts:
+            - mountPath: /etc/webhook/certs/
+              name: cert
+              readOnly: true
+      volumes:
+      - name: cert
+        secret:
+          defaultMode: 420
+          secretName: lxcfs-webhook-server-cert
