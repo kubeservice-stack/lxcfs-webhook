@@ -18,5 +18,5 @@ COPY --from=builder /lxcfs/.libs/liblxcfs.so /lxcfs/liblxcfs.so
 COPY --from=builder /usr/lib64/libfuse.so.2.9.2 /lxcfs/libfuse.so.2.9.2
 COPY --from=builder /usr/lib64/libulockmgr.so.1.0.1 /lxcfs/libulockmgr.so.1.0.1
 
-COPY start.sh /
+COPY ./hack/build/start.sh /
 CMD ["/start.sh"]
