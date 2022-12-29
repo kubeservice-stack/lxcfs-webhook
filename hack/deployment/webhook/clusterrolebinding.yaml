@@ -2,6 +2,7 @@ kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: lxcfs-webhook-clusterrolebinging
+  namespace: kube-system
 subjects:
 - kind: ServiceAccount
   name: lxcfs-webhook-serviceaccount

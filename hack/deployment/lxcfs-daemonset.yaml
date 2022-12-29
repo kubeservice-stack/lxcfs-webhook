@@ -20,7 +20,7 @@ spec:
         effect: NoSchedule
       containers:
       - name: lxcfs
-        image: dongjiang1989/lxcfs:v3.1.2
+        image: dongjiang1989/lxcfs:v5.0.2
         imagePullPolicy: Always
         securityContext:
           privileged: true

@@ -14,8 +14,8 @@ webhooks:
         namespace: kube-system
         path: "/validate"
     rules:
-      - operations: [ "CREATE" ]
-        apiGroups: ["pod", ""]
+      - operations: ["CREATE"]
+        apiGroups: [""]
         apiVersions: ["v1"]
         resources: ["pods"]
     admissionReviewVersions: ["v1","v1beta1"]

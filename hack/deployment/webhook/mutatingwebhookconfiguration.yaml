@@ -13,15 +13,18 @@ webhooks:
         name: lxcfs-admission-webhook-svc
         namespace: kube-system
         path: "/mutate"
+        
     rules:
-      - operations: [ "CREATE" ]
-        apiGroups: ["core", ""]
+      - operations: ["CREATE"]
+        apiGroups: [""]
         apiVersions: ["v1"]
         resources: ["pods"]
+        scope:       "Namespaced"
     admissionReviewVersions: ["v1","v1beta1"]
     sideEffects: None
     timeoutSeconds: 15
     failurePolicy: Ignore
+    reinvocationPolicy: Never
     namespaceSelector:
       matchLabels:
         lxcfs-admission-webhook: enabled
