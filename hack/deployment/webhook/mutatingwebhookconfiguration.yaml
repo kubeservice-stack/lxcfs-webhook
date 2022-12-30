@@ -14,7 +14,6 @@ webhooks:
         name: lxcfs-admission-webhook-svc
         namespace: kube-system
         path: "/mutate"
-        
     rules:
       - operations: ["CREATE"]
         apiGroups: [""]

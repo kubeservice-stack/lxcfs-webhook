@@ -248,6 +248,12 @@ func (whsvr *WebhookServer) mutatePod(ar *v1beta1.AdmissionReview) *v1beta1.Admi
 		Allowed:   true,
 		Patch:     patchBytes,
 		PatchType: &patchType,
+		Result: &metav1.Status{
+			Status: common.SuccessStatus,
+		},
+		AuditAnnotations: map[string]string{
+			common.AdmissionWebhookAnnotationPatchKey: string(patchBytes),
+		},
 	}
 	glog.Infof("AdmissionResponse: body=%v\n", ret)
 	return ret

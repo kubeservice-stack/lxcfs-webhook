@@ -20,6 +20,7 @@ const (
 	AdmissionWebhookAnnotationValidateKey = "lxcfs-admission-webhook.kubernetes.io/validate"
 	AdmissionWebhookAnnotationMutateKey   = "lxcfs-admission-webhook.kubernetes.io/mutate"
 	AdmissionWebhookAnnotationStatusKey   = "lxcfs-admission-webhook.kubernetes.io/status"
+	AdmissionWebhookAnnotationPatchKey    = "lxcfs-admission-webhook.kubernetes.io/applied-patch"
 
 	NameLabel      = "app.kubernetes.io/name"
 	InstanceLabel  = "app.kubernetes.io/instance"
@@ -28,5 +29,6 @@ const (
 	PartOfLabel    = "app.kubernetes.io/part-of"
 	ManagedByLabel = "app.kubernetes.io/managed-by"
 
-	NA = "not_available"
+	NA            = "not_available"
+	SuccessStatus = "Success"
 )
