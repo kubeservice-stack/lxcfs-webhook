@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: httpd-test
+  template:
+    metadata:
+      labels:
+        app: httpd-test
+    spec:
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      containers:
+        - name: httpd
+          image: httpd:2.4.32
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "1"
+            limits:
+              memory: "256Mi"
+              cpu: "1"
