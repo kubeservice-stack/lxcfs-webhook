@@ -252,7 +252,8 @@ func (whsvr *WebhookServer) mutatePod(ar *v1beta1.AdmissionReview) *v1beta1.Admi
 		Patch:     patchBytes,
 		PatchType: &patchType,
 		Result: &metav1.Status{
-			Status: common.SuccessStatus,
+			Code:   int32(200),
+			Status: metav1.StatusSuccess,
 		},
 		AuditAnnotations: map[string]string{
 			common.AdmissionWebhookAnnotationPatchKey: string(patchBytes),

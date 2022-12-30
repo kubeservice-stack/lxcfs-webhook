@@ -29,6 +29,5 @@ const (
 	PartOfLabel    = "app.kubernetes.io/part-of"
 	ManagedByLabel = "app.kubernetes.io/managed-by"
 
-	NA            = "not_available"
-	SuccessStatus = "Success"
+	NA = "not_available"
 )

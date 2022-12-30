@@ -5,7 +5,7 @@ metadata:
   namespace: kube-system
 subjects:
 - kind: ServiceAccount
-  name: lxcfs-admission-webhook-svc
+  name: lxcfs-webhook-serviceaccount
   namespace: kube-system
   apiGroup: ""
 roleRef:
