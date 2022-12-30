@@ -161,7 +161,7 @@ func (whsvr *WebhookServer) Serve(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	glog.Infof("Serve Received AdmissionReview: %s\n", string(body))
+	glog.Infof("Serve Received type: %s ,AdmissionReview: %s\n", r.URL.Path, string(body))
 
 	var admissionResponse *v1beta1.AdmissionResponse
 	ar := v1beta1.AdmissionReview{}
@@ -173,7 +173,6 @@ func (whsvr *WebhookServer) Serve(w http.ResponseWriter, r *http.Request) {
 			},
 		}
 	} else {
-		fmt.Println(r.URL.Path)
 		if r.URL.Path == "/mutate" {
 			admissionResponse = whsvr.mutatePod(&ar)
 		} else if r.URL.Path == "/validate" {
