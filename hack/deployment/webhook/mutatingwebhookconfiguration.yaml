@@ -25,6 +25,7 @@ webhooks:
     timeoutSeconds: 15
     failurePolicy: Ignore
     reinvocationPolicy: Never
+    matchPolicy: Equivalent
     namespaceSelector:
       matchLabels:
         lxcfs-admission-webhook: enabled

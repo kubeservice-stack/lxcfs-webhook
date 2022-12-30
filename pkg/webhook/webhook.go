@@ -26,7 +26,7 @@ import (
 	"github.com/golang/glog"
 	"github.com/kubeservice-stack/lxcfs-webhook/pkg/common"
 	"github.com/kubeservice-stack/lxcfs-webhook/pkg/lxcfs"
-	"k8s.io/api/admission/v1beta1"
+	v1beta1 "k8s.io/api/admission/v1"
 	admissionregistrationv1 "k8s.io/api/admissionregistration/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"

@@ -7,6 +7,10 @@ spec:
   dnsNames:
   - lxcfs-admission-webhook-svc.kube-system.svc
   - lxcfs-admission-webhook-svc.kube-system.svc.cluster.local
+  - mutating-lxcfs-admission-webhook-svc.kube-system.svc
+  - validation-lxcfs-admission-webhook-svc.kube-system.svc
+  - mutating-lxcfs-admission-webhook-svc.kube-system.svc.cluster.local
+  - validation-lxcfs-admission-webhook-svc.kube-system.svc.cluster.local
   issuerRef:
     kind: Issuer
     name: lxcfs-selfsigned-issuer
