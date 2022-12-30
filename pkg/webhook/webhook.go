@@ -161,6 +161,8 @@ func (whsvr *WebhookServer) Serve(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	glog.Infof("Received AdmissionReview: %s\n", string(body))
+
 	var admissionResponse *v1beta1.AdmissionResponse
 	ar := v1beta1.AdmissionReview{}
 	if _, _, err := deserializer.Decode(body, nil, &ar); err != nil {
@@ -241,12 +243,14 @@ func (whsvr *WebhookServer) mutatePod(ar *v1beta1.AdmissionReview) *v1beta1.Admi
 	patchType := v1beta1.PatchTypeJSONPatch
 
 	glog.Infof("AdmissionResponse: patch=%v\n", string(patchBytes))
-	return &v1beta1.AdmissionResponse{
+	ret := &v1beta1.AdmissionResponse{
 		UID:       req.UID,
 		Allowed:   true,
 		Patch:     patchBytes,
 		PatchType: &patchType,
 	}
+	glog.Infof("AdmissionResponse: body=%v\n", ret)
+	return ret
 }
 
 func createPodPatch(pod *corev1.Pod) ([]byte, error) {

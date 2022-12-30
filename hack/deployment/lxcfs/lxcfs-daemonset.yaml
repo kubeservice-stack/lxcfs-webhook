@@ -20,8 +20,8 @@ spec:
         effect: NoSchedule
       containers:
       - name: lxcfs
-        image: dongjiang1989/lxcfs:v5.0.2
-        imagePullPolicy: Always
+        image: dongjiang1989/lxcfs:v4.0.12
+        imagePullPolicy: IfNotPresent
         securityContext:
           privileged: true
         volumeMounts:
