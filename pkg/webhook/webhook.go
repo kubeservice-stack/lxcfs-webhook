@@ -183,6 +183,9 @@ func (whsvr *WebhookServer) Serve(w http.ResponseWriter, r *http.Request) {
 	admissionReview := v1beta1.AdmissionReview{}
 	if admissionResponse != nil {
 		admissionReview.Response = admissionResponse
+		if ar.Request != nil {
+			admissionReview.Response.UID = ar.Request.UID
+		}
 	}
 
 	glog.Infof("Serve Respone AdmissionReview: %v\n", admissionReview)
@@ -199,7 +202,6 @@ func (whsvr *WebhookServer) Serve(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("could not write response: %v", err), http.StatusInternalServerError)
 		return
 	}
-	w.WriteHeader(http.StatusOK)
 	return
 }
 
