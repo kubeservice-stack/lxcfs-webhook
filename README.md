@@ -6,6 +6,9 @@
 
 Automatically deploy LXCFS while mounted to the container
 
+## 设计
+[https://kubeservice.cn/2021/04/27/k8s-lxcfs-overview/](https://kubeservice.cn/2021/04/27/k8s-lxcfs-overview/)
+
 ## 动机
 Pod 容器内资源可见性：让Pod的资源视角真实、准确
 
@@ -17,10 +20,41 @@ Pod 容器内资源可见性：让Pod的资源视角真实、准确
 
 ## 依赖
 
-Kubernetes: >= `1.16.0`
+* Kubernetes: >= `1.16.0`
+* cert-manager (v1.2+) is installed.
+* helm v3 is installed.
 
+## 部署
 
+1. 创建webhook证书
+```bash
+kubectl apply -f ./hack/deployment/certs/ .
+```
 
+2. 创建lxcfs daemonset.yaml
+```bash
+kubectl apply -f ./hack/deployment/lxcfs/ .
+```
+
+3. 创建webhook
+```bash
+kubectl apply -f ./hack/deployment/webhook/ .
+```
+
+## 使用
+
+### 设置
+对需要`namespaces` 添加 webhook label
+
+```bash
+kubectl label namespace default lxcfs-admission-webhook=enabled
+```
+
+### 验证
+
+```bash
+kubectl apply -f ./hack/examples/httpd-test.yaml
+```
 
 ## License
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkubeservice-stack%2Flxcfs-webhook.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkubeservice-stack%2Flxcfs-webhook?ref=badge_large)
