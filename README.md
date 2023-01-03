@@ -2,7 +2,9 @@
 [![lxcfs docker publish](https://github.com/kubeservice-stack/lxcfs-webhook/actions/workflows/lxcfs.yml/badge.svg?branch=main)](https://github.com/kubeservice-stack/lxcfs-webhook/actions/workflows/lxcfs.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkubeservice-stack%2Flxcfs-webhook.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkubeservice-stack%2Flxcfs-webhook?ref=badge_shield)
-
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/kubeservice-stack/lxcfs-webhook?include_prereleases)
+[![Last Commit](https://img.shields.io/github/last-commit/kubeservice-stack/lxcfs-webhook)](https://github.com/kubeservice-stack/lxcfs-webhook)
+[![Go Report Card](https://goreportcard.com/badge/github.com/kubeservice-stack/lxcfs-webhook)](https://goreportcard.com/report/github.com/kubeservice-stack/lxcfs-webhook)
 
 Automatically deploy LXCFS while mounted to the container
 
