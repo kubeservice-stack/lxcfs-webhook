@@ -1,6 +1,7 @@
 # lxcfs-webhook
 [![lxcfs docker publish](https://github.com/kubeservice-stack/lxcfs-webhook/actions/workflows/lxcfs.yml/badge.svg?branch=main)](https://github.com/kubeservice-stack/lxcfs-webhook/actions/workflows/lxcfs.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkubeservice-stack%2Flxcfs-webhook.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkubeservice-stack%2Flxcfs-webhook?ref=badge_shield)
 
 
 Automatically deploy LXCFS while mounted to the container
@@ -19,3 +20,7 @@ Pod 容器内资源可见性：让Pod的资源视角真实、准确
 Kubernetes: >= `1.16.0`
 
 
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkubeservice-stack%2Flxcfs-webhook.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkubeservice-stack%2Flxcfs-webhook?ref=badge_large)
