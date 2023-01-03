@@ -53,8 +53,8 @@ jobs:
           file: ${{ matrix.file }}
           platforms: ${{ matrix.platforms }}
           push: true
-          tags: ${{ matrix.image }}
+          tags: ${{ env.REGISTRY }}/${{ matrix.image }}
       - name: Test ${{ matrix.name }}
         run: |
-          docker pull ${{ matrix.image}}
-          docker image inspect ${{ matrix.image}}
+          docker pull ${{ env.REGISTRY }}/${{ matrix.image}}
+          docker image inspect ${{ env.REGISTRY }}/${{ matrix.image}}
