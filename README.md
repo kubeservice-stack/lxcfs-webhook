@@ -5,6 +5,7 @@
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/kubeservice-stack/lxcfs-webhook?include_prereleases)
 [![Last Commit](https://img.shields.io/github/last-commit/kubeservice-stack/lxcfs-webhook)](https://github.com/kubeservice-stack/lxcfs-webhook)
 [![Go Report Card](https://goreportcard.com/badge/github.com/kubeservice-stack/lxcfs-webhook)](https://goreportcard.com/report/github.com/kubeservice-stack/lxcfs-webhook)
+[![Go Reference](https://pkg.go.dev/badge/github.com/kubeservice-stack/lxcfs-webhook.svg)](https://pkg.go.dev/github.com/kubeservice-stack/lxcfs-webhook)
 
 Automatically deploy LXCFS while mounted to the container
 
