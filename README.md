@@ -59,5 +59,17 @@ kubectl label namespace default lxcfs-admission-webhook=enabled
 kubectl apply -f ./hack/examples/httpd-test.yaml
 ```
 
+### 问题
+
+在高版本centos中：
+```
+error while loading shared libraries: libtinfo.so.5: cannot open shared object file: No such file or directory
+```
+
+解决方式：
+```
+sudo ln -s /usr/lib64/libtinfo.so.6.1 /usr/lib64/libtinfo.so.5
+```
+
 ## License
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkubeservice-stack%2Flxcfs-webhook.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkubeservice-stack%2Flxcfs-webhook?ref=badge_large)
