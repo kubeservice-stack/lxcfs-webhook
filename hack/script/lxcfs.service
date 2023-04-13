@@ -1,0 +1,19 @@
+[Unit]
+Description=FUSE filesystem for LXC
+ConditionVirtualization=!container
+Before=lxc.service
+Documentation=man:lxcfs(1)
+
+[Service]
+ExecStart=/usr/bin/lxcfs -l /var/lib/lxc/lxcfs/
+KillMode=process
+Restart= always
+Delegate=yes
+ExecStopPost=-/bin/fusermount -u /var/lib/lxc/lxcfs
+ExecReload=/bin/kill -USR1 $MAINPID
+
+# 添加 remount script 脚本
+ExecStartPost=/usr/local/bin/container_remount_lxcfs.sh
+
+[Install]
+WantedBy=multi-user.target
