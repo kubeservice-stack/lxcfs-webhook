@@ -19,11 +19,11 @@ package v1
 import (
 	"time"
 
-	v1 "k8s.io/api/core/v1"
+	"k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/intstr"
 	"k8s.io/kubernetes/pkg/util/parsers"
-	"k8s.io/utils/pointer"
+	utilpointer "k8s.io/utils/pointer"
 )
 
 func addDefaultingFuncs(scheme *runtime.Scheme) error {
@@ -61,10 +61,15 @@ func SetDefaults_ReplicationController(obj *v1.ReplicationController) {
 	}
 }
 func SetDefaults_Volume(obj *v1.Volume) {
-	if pointer.AllPtrFieldsNil(&obj.VolumeSource) {
+	if utilpointer.AllPtrFieldsNil(&obj.VolumeSource) {
 		obj.VolumeSource = v1.VolumeSource{
 			EmptyDir: &v1.EmptyDirVolumeSource{},
 		}
+	}
+}
+func SetDefaults_ContainerPort(obj *v1.ContainerPort) {
+	if obj.Protocol == "" {
+		obj.Protocol = v1.ProtocolTCP
 	}
 }
 func SetDefaults_Container(obj *v1.Container) {
@@ -85,10 +90,6 @@ func SetDefaults_Container(obj *v1.Container) {
 	if obj.TerminationMessagePolicy == "" {
 		obj.TerminationMessagePolicy = v1.TerminationMessageReadFile
 	}
-}
-
-func SetDefaults_EphemeralContainer(obj *v1.EphemeralContainer) {
-	SetDefaults_Container((*v1.Container)(&obj.EphemeralContainerCommon))
 }
 
 func SetDefaults_Service(obj *v1.Service) {
@@ -127,19 +128,6 @@ func SetDefaults_Service(obj *v1.Service) {
 		obj.Spec.ExternalTrafficPolicy == "" {
 		obj.Spec.ExternalTrafficPolicy = v1.ServiceExternalTrafficPolicyTypeCluster
 	}
-
-	if obj.Spec.InternalTrafficPolicy == nil {
-		if obj.Spec.Type == v1.ServiceTypeNodePort || obj.Spec.Type == v1.ServiceTypeLoadBalancer || obj.Spec.Type == v1.ServiceTypeClusterIP {
-			serviceInternalTrafficPolicyCluster := v1.ServiceInternalTrafficPolicyCluster
-			obj.Spec.InternalTrafficPolicy = &serviceInternalTrafficPolicyCluster
-		}
-	}
-
-	if obj.Spec.Type == v1.ServiceTypeLoadBalancer {
-		if obj.Spec.AllocateLoadBalancerNodePorts == nil {
-			obj.Spec.AllocateLoadBalancerNodePorts = pointer.BoolPtr(true)
-		}
-	}
 }
 func SetDefaults_Pod(obj *v1.Pod) {
 	// If limits are specified, but requests are not, default requests to limits
@@ -153,7 +141,7 @@ func SetDefaults_Pod(obj *v1.Pod) {
 			}
 			for key, value := range obj.Spec.Containers[i].Resources.Limits {
 				if _, exists := obj.Spec.Containers[i].Resources.Requests[key]; !exists {
-					obj.Spec.Containers[i].Resources.Requests[key] = value.DeepCopy()
+					obj.Spec.Containers[i].Resources.Requests[key] = *(value.Copy())
 				}
 			}
 		}
@@ -165,7 +153,7 @@ func SetDefaults_Pod(obj *v1.Pod) {
 			}
 			for key, value := range obj.Spec.InitContainers[i].Resources.Limits {
 				if _, exists := obj.Spec.InitContainers[i].Resources.Requests[key]; !exists {
-					obj.Spec.InitContainers[i].Resources.Requests[key] = value.DeepCopy()
+					obj.Spec.InitContainers[i].Resources.Requests[key] = *(value.Copy())
 				}
 			}
 		}
@@ -266,11 +254,9 @@ func SetDefaults_PersistentVolumeClaim(obj *v1.PersistentVolumeClaim) {
 	if obj.Status.Phase == "" {
 		obj.Status.Phase = v1.ClaimPending
 	}
-}
-func SetDefaults_PersistentVolumeClaimSpec(obj *v1.PersistentVolumeClaimSpec) {
-	if obj.VolumeMode == nil {
-		obj.VolumeMode = new(v1.PersistentVolumeMode)
-		*obj.VolumeMode = v1.PersistentVolumeFilesystem
+	if obj.Spec.VolumeMode == nil {
+		obj.Spec.VolumeMode = new(v1.PersistentVolumeMode)
+		*obj.Spec.VolumeMode = v1.PersistentVolumeFilesystem
 	}
 }
 func SetDefaults_ISCSIVolumeSource(obj *v1.ISCSIVolumeSource) {
@@ -320,23 +306,6 @@ func SetDefaults_HTTPGetAction(obj *v1.HTTPGetAction) {
 		obj.Scheme = v1.URISchemeHTTP
 	}
 }
-
-// SetDefaults_Namespace adds a default label for all namespaces
-func SetDefaults_Namespace(obj *v1.Namespace) {
-	// we can't SetDefaults for nameless namespaces (generateName).
-	// This code needs to be kept in sync with the implementation that exists
-	// in Namespace Canonicalize strategy (pkg/registry/core/namespace)
-
-	// note that this can result in many calls to feature enablement in some cases, but
-	// we assume that there's no real cost there.
-	if len(obj.Name) > 0 {
-		if obj.Labels == nil {
-			obj.Labels = map[string]string{}
-		}
-		obj.Labels[v1.LabelMetadataName] = obj.Name
-	}
-}
-
 func SetDefaults_NamespaceStatus(obj *v1.NamespaceStatus) {
 	if obj.Phase == "" {
 		obj.Phase = v1.NamespaceActive
@@ -346,7 +315,7 @@ func SetDefaults_NodeStatus(obj *v1.NodeStatus) {
 	if obj.Allocatable == nil && obj.Capacity != nil {
 		obj.Allocatable = make(v1.ResourceList, len(obj.Capacity))
 		for key, value := range obj.Capacity {
-			obj.Allocatable[key] = value.DeepCopy()
+			obj.Allocatable[key] = *(value.Copy())
 		}
 		obj.Allocatable = obj.Capacity
 	}
@@ -370,19 +339,19 @@ func SetDefaults_LimitRangeItem(obj *v1.LimitRangeItem) {
 		// If a default limit is unspecified, but the max is specified, default the limit to the max
 		for key, value := range obj.Max {
 			if _, exists := obj.Default[key]; !exists {
-				obj.Default[key] = value.DeepCopy()
+				obj.Default[key] = *(value.Copy())
 			}
 		}
 		// If a default limit is specified, but the default request is not, default request to limit
 		for key, value := range obj.Default {
 			if _, exists := obj.DefaultRequest[key]; !exists {
-				obj.DefaultRequest[key] = value.DeepCopy()
+				obj.DefaultRequest[key] = *(value.Copy())
 			}
 		}
 		// If a default request is not specified, but the min is provided, default request to the min
 		for key, value := range obj.Min {
 			if _, exists := obj.DefaultRequest[key]; !exists {
-				obj.DefaultRequest[key] = value.DeepCopy()
+				obj.DefaultRequest[key] = *(value.Copy())
 			}
 		}
 	}
@@ -450,5 +419,12 @@ func SetDefaults_HostPathVolumeSource(obj *v1.HostPathVolumeSource) {
 	typeVol := v1.HostPathUnset
 	if obj.Type == nil {
 		obj.Type = &typeVol
+	}
+}
+
+func SetDefaults_SecurityContext(obj *v1.SecurityContext) {
+	if obj.ProcMount == nil {
+		defProcMount := v1.DefaultProcMount
+		obj.ProcMount = &defProcMount
 	}
 }
