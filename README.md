@@ -59,7 +59,7 @@ kubectl label namespace default lxcfs-admission-webhook=enabled
 kubectl apply -f ./hack/examples/httpd-test.yaml
 ```
 
-### 问题
+### 问题一
 
 在高版本centos中：
 ```
@@ -70,6 +70,8 @@ error while loading shared libraries: libtinfo.so.5: cannot open shared object f
 ```
 sudo ln -s /usr/lib64/libtinfo.so.6.1 /usr/lib64/libtinfo.so.5
 ```
+### 问题二
+[Kubernetes LXCFS故障恢复后，对现有Pod 进行 remount 操作](https://kubeservice.cn/2022/04/13/k8s-lxcfs-remount/)
 
 ## License
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkubeservice-stack%2Flxcfs-webhook.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkubeservice-stack%2Flxcfs-webhook?ref=badge_large)
