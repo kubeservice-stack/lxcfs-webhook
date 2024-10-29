@@ -56,6 +56,10 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/mutate", whsvr.Serve)
 	mux.HandleFunc("/validate", whsvr.Serve)
+	mux.HandleFunc("/", func(w http.ResponseWriter, _ *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte(`{"status":"up"}`))
+	})
 	whsvr.Server.Handler = mux
 
 	// start webhook server in new routine
