@@ -34,14 +34,14 @@ var (
 	requireAnnotation bool
 )
 
-// -v /var/lib/lxcfs/proc/cpuinfo:/proc/cpuinfo:ro
-// -v /var/lib/lxcfs/proc/diskstats:/proc/diskstats:ro
-// -v /var/lib/lxcfs/proc/meminfo:/proc/meminfo:ro
-// -v /var/lib/lxcfs/proc/stat:/proc/stat:ro
-// -v /var/lib/lxcfs/proc/swaps:/proc/swaps:ro
-// -v /var/lib/lxcfs/proc/uptime:/proc/uptime:ro
-// -v /var/lib/lxcfs/proc/loadavg:/proc/loadavg:ro
-// -v /var/lib/lxcfs/sys/devices/system/cpu/online:/sys/devices/system/cpu/online:ro
+// -v /var/lib/lxc/lxcfs/proc/cpuinfo:/proc/cpuinfo:ro
+// -v /var/lib/lxc/lxcfs/proc/diskstats:/proc/diskstats:ro
+// -v /var/lib/lxc/lxcfs/proc/meminfo:/proc/meminfo:ro
+// -v /var/lib/lxc/lxcfs/proc/stat:/proc/stat:ro
+// -v /var/lib/lxc/lxcfs/proc/swaps:/proc/swaps:ro
+// -v /var/lib/lxc/lxcfs/proc/uptime:/proc/uptime:ro
+// -v /var/lib/lxc/lxcfs/proc/loadavg:/proc/loadavg:ro
+// -v /var/lib/lxc/lxcfs/sys/devices/system/cpu/online:/sys/devices/system/cpu/online:ro
 var VolumeMountsTemplate = []corev1.VolumeMount{
 
 	{
@@ -85,8 +85,8 @@ var VolumeMountsTemplate = []corev1.VolumeMount{
 		ReadOnly:  true,
 	},
 	{
-		Name:             "var-lib-lxcfs",
-		MountPath:        "/var/lib/lxcfs",
+		Name:             "var-lib-lxc",
+		MountPath:        "/var/lib/lxc",
 		ReadOnly:         true,
 		MountPropagation: ptr.To(corev1.MountPropagationHostToContainer),
 	},
@@ -96,7 +96,7 @@ var VolumesTemplate = []corev1.Volume{
 		Name: "lxcfs-proc-cpuinfo",
 		VolumeSource: corev1.VolumeSource{
 			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/var/lib/lxcfs/proc/cpuinfo",
+				Path: "/var/lib/lxc/lxcfs/proc/cpuinfo",
 				Type: ptr.To(corev1.HostPathFile),
 			},
 		},
@@ -105,7 +105,7 @@ var VolumesTemplate = []corev1.Volume{
 		Name: "lxcfs-proc-diskstats",
 		VolumeSource: corev1.VolumeSource{
 			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/var/lib/lxcfs/proc/diskstats",
+				Path: "/var/lib/lxc/lxcfs/proc/diskstats",
 				Type: ptr.To(corev1.HostPathFile),
 			},
 		},
@@ -114,7 +114,7 @@ var VolumesTemplate = []corev1.Volume{
 		Name: "lxcfs-proc-meminfo",
 		VolumeSource: corev1.VolumeSource{
 			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/var/lib/lxcfs/proc/meminfo",
+				Path: "/var/lib/lxc/lxcfs/proc/meminfo",
 				Type: ptr.To(corev1.HostPathFile),
 			},
 		},
@@ -123,7 +123,7 @@ var VolumesTemplate = []corev1.Volume{
 		Name: "lxcfs-proc-stat",
 		VolumeSource: corev1.VolumeSource{
 			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/var/lib/lxcfs/proc/stat",
+				Path: "/var/lib/lxc/lxcfs/proc/stat",
 				Type: ptr.To(corev1.HostPathFile),
 			},
 		},
@@ -132,7 +132,7 @@ var VolumesTemplate = []corev1.Volume{
 		Name: "lxcfs-proc-swaps",
 		VolumeSource: corev1.VolumeSource{
 			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/var/lib/lxcfs/proc/swaps",
+				Path: "/var/lib/lxc/lxcfs/proc/swaps",
 				Type: ptr.To(corev1.HostPathFile),
 			},
 		},
@@ -141,7 +141,7 @@ var VolumesTemplate = []corev1.Volume{
 		Name: "lxcfs-proc-uptime",
 		VolumeSource: corev1.VolumeSource{
 			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/var/lib/lxcfs/proc/uptime",
+				Path: "/var/lib/lxc/lxcfs/proc/uptime",
 				Type: ptr.To(corev1.HostPathFile),
 			},
 		},
@@ -150,7 +150,7 @@ var VolumesTemplate = []corev1.Volume{
 		Name: "lxcfs-proc-loadavg",
 		VolumeSource: corev1.VolumeSource{
 			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/var/lib/lxcfs/proc/loadavg",
+				Path: "/var/lib/lxc/lxcfs/proc/loadavg",
 				Type: ptr.To(corev1.HostPathFile),
 			},
 		},
@@ -159,16 +159,16 @@ var VolumesTemplate = []corev1.Volume{
 		Name: "lxcfs-sys-devices-system-cpu-online",
 		VolumeSource: corev1.VolumeSource{
 			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/var/lib/lxcfs/sys/devices/system/cpu/online",
+				Path: "/var/lib/lxc/lxcfs/sys/devices/system/cpu/online",
 				Type: ptr.To(corev1.HostPathFile),
 			},
 		},
 	},
 	{
-		Name: "var-lib-lxcfs",
+		Name: "var-lib-lxc",
 		VolumeSource: corev1.VolumeSource{
 			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/var/lib/lxcfs/",
+				Path: "/var/lib/lxc/",
 				Type: ptr.To(corev1.HostPathDirectory),
 			},
 		},

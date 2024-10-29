@@ -46,5 +46,5 @@ spec:
           path: /usr/lib64
       - name: lxcfs
         hostPath:
-          path: /var/lib/lxcfs
+          path: /var/lib/lxc/lxcfs
           type: DirectoryOrCreate
