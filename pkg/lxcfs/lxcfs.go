@@ -86,7 +86,7 @@ var VolumeMountsTemplate = []corev1.VolumeMount{
 	},
 	{
 		Name:             "var-lib-lxcfs",
-		MountPath:        "/var/lib/lxcfs/",
+		MountPath:        "/var/lib/lxcfs",
 		ReadOnly:         true,
 		MountPropagation: ptr.To(corev1.MountPropagationHostToContainer),
 	},
@@ -97,6 +97,7 @@ var VolumesTemplate = []corev1.Volume{
 		VolumeSource: corev1.VolumeSource{
 			HostPath: &corev1.HostPathVolumeSource{
 				Path: "/var/lib/lxcfs/proc/cpuinfo",
+				Type: ptr.To(corev1.HostPathFile),
 			},
 		},
 	},
@@ -105,6 +106,7 @@ var VolumesTemplate = []corev1.Volume{
 		VolumeSource: corev1.VolumeSource{
 			HostPath: &corev1.HostPathVolumeSource{
 				Path: "/var/lib/lxcfs/proc/diskstats",
+				Type: ptr.To(corev1.HostPathFile),
 			},
 		},
 	},
@@ -113,6 +115,7 @@ var VolumesTemplate = []corev1.Volume{
 		VolumeSource: corev1.VolumeSource{
 			HostPath: &corev1.HostPathVolumeSource{
 				Path: "/var/lib/lxcfs/proc/meminfo",
+				Type: ptr.To(corev1.HostPathFile),
 			},
 		},
 	},
@@ -121,6 +124,7 @@ var VolumesTemplate = []corev1.Volume{
 		VolumeSource: corev1.VolumeSource{
 			HostPath: &corev1.HostPathVolumeSource{
 				Path: "/var/lib/lxcfs/proc/stat",
+				Type: ptr.To(corev1.HostPathFile),
 			},
 		},
 	},
@@ -129,6 +133,7 @@ var VolumesTemplate = []corev1.Volume{
 		VolumeSource: corev1.VolumeSource{
 			HostPath: &corev1.HostPathVolumeSource{
 				Path: "/var/lib/lxcfs/proc/swaps",
+				Type: ptr.To(corev1.HostPathFile),
 			},
 		},
 	},
@@ -137,6 +142,7 @@ var VolumesTemplate = []corev1.Volume{
 		VolumeSource: corev1.VolumeSource{
 			HostPath: &corev1.HostPathVolumeSource{
 				Path: "/var/lib/lxcfs/proc/uptime",
+				Type: ptr.To(corev1.HostPathFile),
 			},
 		},
 	},
@@ -145,6 +151,7 @@ var VolumesTemplate = []corev1.Volume{
 		VolumeSource: corev1.VolumeSource{
 			HostPath: &corev1.HostPathVolumeSource{
 				Path: "/var/lib/lxcfs/proc/loadavg",
+				Type: ptr.To(corev1.HostPathFile),
 			},
 		},
 	},
@@ -153,6 +160,7 @@ var VolumesTemplate = []corev1.Volume{
 		VolumeSource: corev1.VolumeSource{
 			HostPath: &corev1.HostPathVolumeSource{
 				Path: "/var/lib/lxcfs/sys/devices/system/cpu/online",
+				Type: ptr.To(corev1.HostPathFile),
 			},
 		},
 	},
@@ -161,6 +169,7 @@ var VolumesTemplate = []corev1.Volume{
 		VolumeSource: corev1.VolumeSource{
 			HostPath: &corev1.HostPathVolumeSource{
 				Path: "/var/lib/lxcfs/",
+				Type: ptr.To(corev1.HostPathDirectory),
 			},
 		},
 	},
