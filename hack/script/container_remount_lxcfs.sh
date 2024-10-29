@@ -1,7 +1,7 @@
 #! /bin/bash
 
 PATH=$PATH:/bin
-LXCFS="/var/lib/lxcfs"
+LXCFS="/var/lib/lxc/lxcfs"
 LXCFS_ROOT_PATH="/var/lib"
 
 containers=$(docker ps | grep -v pause  | grep -v calico | grep -v cilium | awk '{print $1}' | grep -v CONTAINE)
