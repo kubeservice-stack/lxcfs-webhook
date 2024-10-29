@@ -4,7 +4,7 @@ PATH=$PATH:/bin
 LXCFS="/var/lib/lxcfs"
 LXCFS_ROOT_PATH="/var/lib"
 
-containers=$(docker ps | grep -v pause  | grep -v calico ｜ grep -v cilium | awk '{print $1}' | grep -v CONTAINE)
+containers=$(docker ps | grep -v pause  | grep -v calico | grep -v cilium | awk '{print $1}' | grep -v CONTAINE)
 
 for container in $containers;do
 	mountpoint=$(docker inspect --format '{{ range .Mounts }}{{ if eq .Destination "/var/lib/lxc" }}{{ .Source }}{{ end }}{{ end }}' $container)

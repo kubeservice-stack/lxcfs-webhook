@@ -18,6 +18,7 @@ package lxcfs
 
 import (
 	corev1 "k8s.io/api/core/v1"
+	"k8s.io/utils/ptr"
 )
 
 const (
@@ -40,47 +41,56 @@ var (
 // -v /var/lib/lxcfs/proc/swaps:/proc/swaps:ro
 // -v /var/lib/lxcfs/proc/uptime:/proc/uptime:ro
 // -v /var/lib/lxcfs/proc/loadavg:/proc/loadavg:ro
+// -v /var/lib/lxcfs/sys/devices/system/cpu/online:/sys/devices/system/cpu/online:ro
 var VolumeMountsTemplate = []corev1.VolumeMount{
 
 	{
-		Name:      "lxcfs-proc-cpuinfo",
-		MountPath: "/proc/cpuinfo",
-		ReadOnly:  true,
+		Name:             "lxcfs-proc-cpuinfo",
+		MountPath:        "/proc/cpuinfo",
+		ReadOnly:         true,
+		MountPropagation: ptr.To(corev1.MountPropagationHostToContainer),
 	},
 	{
-		Name:      "lxcfs-proc-meminfo",
-		MountPath: "/proc/meminfo",
-		ReadOnly:  true,
+		Name:             "lxcfs-proc-meminfo",
+		MountPath:        "/proc/meminfo",
+		ReadOnly:         true,
+		MountPropagation: ptr.To(corev1.MountPropagationHostToContainer),
 	},
 	{
-		Name:      "lxcfs-proc-diskstats",
-		MountPath: "/proc/diskstats",
-		ReadOnly:  true,
+		Name:             "lxcfs-proc-diskstats",
+		MountPath:        "/proc/diskstats",
+		ReadOnly:         true,
+		MountPropagation: ptr.To(corev1.MountPropagationHostToContainer),
 	},
 	{
-		Name:      "lxcfs-proc-stat",
-		MountPath: "/proc/stat",
-		ReadOnly:  true,
+		Name:             "lxcfs-proc-stat",
+		MountPath:        "/proc/stat",
+		ReadOnly:         true,
+		MountPropagation: ptr.To(corev1.MountPropagationHostToContainer),
 	},
 	{
-		Name:      "lxcfs-proc-swaps",
-		MountPath: "/proc/swaps",
-		ReadOnly:  true,
+		Name:             "lxcfs-proc-swaps",
+		MountPath:        "/proc/swaps",
+		ReadOnly:         true,
+		MountPropagation: ptr.To(corev1.MountPropagationHostToContainer),
 	},
 	{
-		Name:      "lxcfs-proc-uptime",
-		MountPath: "/proc/uptime",
-		ReadOnly:  true,
+		Name:             "lxcfs-proc-uptime",
+		MountPath:        "/proc/uptime",
+		ReadOnly:         true,
+		MountPropagation: ptr.To(corev1.MountPropagationHostToContainer),
 	},
 	{
-		Name:      "lxcfs-proc-loadavg",
-		MountPath: "/proc/loadavg",
-		ReadOnly:  true,
+		Name:             "lxcfs-proc-loadavg",
+		MountPath:        "/proc/loadavg",
+		ReadOnly:         true,
+		MountPropagation: ptr.To(corev1.MountPropagationHostToContainer),
 	},
 	{
-		Name:      "lxcfs-sys-devices-system-cpu-online",
-		MountPath: "/sys/devices/system/cpu/online",
-		ReadOnly:  true,
+		Name:             "lxcfs-sys-devices-system-cpu-online",
+		MountPath:        "/sys/devices/system/cpu/online",
+		ReadOnly:         true,
+		MountPropagation: ptr.To(corev1.MountPropagationHostToContainer),
 	},
 }
 var VolumesTemplate = []corev1.Volume{
