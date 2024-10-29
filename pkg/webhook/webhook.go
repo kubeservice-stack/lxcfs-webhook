@@ -19,7 +19,7 @@ package webhook
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 
@@ -39,32 +39,16 @@ var (
 	runtimeScheme = runtime.NewScheme()
 	codecs        = serializer.NewCodecFactory(runtimeScheme)
 	deserializer  = codecs.UniversalDeserializer()
-
-	// (https://github.com/kubernetes/kubernetes/issues/57982)
-	defaulter = runtime.ObjectDefaulter(runtimeScheme)
 )
 
 var (
 	ignoredNamespaces = []string{
 		metav1.NamespaceSystem,
 		metav1.NamespacePublic,
+		"kube-node-lease",
 	}
-	requiredLabels = []string{
-		common.NameLabel,
-		common.InstanceLabel,
-		common.VersionLabel,
-		common.ComponentLabel,
-		common.PartOfLabel,
-		common.ManagedByLabel,
-	}
-	addLabels = map[string]string{
-		common.NameLabel:      common.NA,
-		common.InstanceLabel:  common.NA,
-		common.VersionLabel:   common.NA,
-		common.ComponentLabel: common.NA,
-		common.PartOfLabel:    common.NA,
-		common.ManagedByLabel: common.NA,
-	}
+
+	Parameters WhSvrParameters
 )
 
 type WebhookServer struct {
@@ -73,10 +57,11 @@ type WebhookServer struct {
 
 // Webhook Server parameters
 type WhSvrParameters struct {
-	Port           int    // webhook server port
-	CertFile       string // path to the x509 certificate for https
-	KeyFile        string // path to the x509 private key matching `CertFile`
-	SidecarCfgFile string // path to sidecar injector configuration file
+	Port             int    // webhook server port
+	CertFile         string // path to the x509 certificate for https
+	KeyFile          string // path to the x509 private key matching `CertFile`
+	SidecarCfgFile   string // path to sidecar injector configuration file
+	CustomNamespaces string // ignored custom namespaces
 }
 
 type patchOperation struct {
@@ -133,17 +118,11 @@ func mutationRequired(ignoredList []string, metadata *metav1.ObjectMeta) bool {
 	return required
 }
 
-func validationRequired(ignoredList []string, metadata *metav1.ObjectMeta) bool {
-	required := admissionRequired(ignoredList, common.AdmissionWebhookAnnotationValidateKey, metadata)
-	glog.Infof("Validation policy for %v/%v: required:%v", metadata.Namespace, metadata.Name, required)
-	return required
-}
-
 // Serve method for webhook server
 func (whsvr *WebhookServer) Serve(w http.ResponseWriter, r *http.Request) {
 	var body []byte
 	if r.Body != nil {
-		if data, err := ioutil.ReadAll(r.Body); err == nil {
+		if data, err := io.ReadAll(r.Body); err == nil {
 			body = data
 		}
 	}
@@ -203,7 +182,6 @@ func (whsvr *WebhookServer) Serve(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("could not write response: %v", err), http.StatusInternalServerError)
 		return
 	}
-	return
 }
 
 // main mutation process
@@ -229,7 +207,7 @@ func (whsvr *WebhookServer) mutatePod(ar *admissionv1.AdmissionReview) *admissio
 	}
 	resourceName, resourceNamespace, objectMeta = pod.Name, pod.Namespace, &pod.ObjectMeta
 
-	if !mutationRequired(ignoredNamespaces, objectMeta) {
+	if !mutationRequired(MergeArray(ignoredNamespaces, ToStrings(Parameters.CustomNamespaces)), objectMeta) {
 		glog.Infof("Skipping validation for %s/%s due to policy check", resourceNamespace, resourceName)
 		return &admissionv1.AdmissionResponse{
 			Allowed: true,
@@ -350,4 +328,22 @@ func (whsvr *WebhookServer) validatePod(ar *admissionv1.AdmissionReview) *admiss
 func escapeJSONPointerValue(in string) string {
 	step := strings.Replace(in, "~", "~0", -1)
 	return strings.Replace(step, "/", "~1", -1)
+}
+
+func ToStrings(s string) []string {
+	var ret []string
+	for _, v := range strings.Split(s, ",") {
+		k := strings.Trim(v, " ")
+		if k != "" {
+			ret = append(ret, k)
+		}
+	}
+	return ret
+}
+
+func MergeArray(a, b []string) []string {
+	var c []string
+	c = append(c, a...)
+	c = append(c, b...)
+	return c
 }
