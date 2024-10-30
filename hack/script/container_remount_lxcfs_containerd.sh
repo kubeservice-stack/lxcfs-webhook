@@ -2,7 +2,7 @@
 
 LXCFS="/var/lib/lxc/lxcfs"
 
-containers=$(crictl ps | grep -v pause  | grep -v calico | grep -v cilium  |awk '{print $1}')
+containers=$(crictl ps | grep -v pause  | grep -v calico | grep -v cilium  |awk '{print $1}' | grep -v CONTAINER)
 for container in $containers; do
     # 获取挂载点信息
     mounts=$(crictl inspect $container | jq -r '.info.config.mounts[] | "\(.container_path) -> \(.host_path)"' | grep "$LXCFS/")
@@ -17,16 +17,16 @@ for container in $containers; do
         PID=$(crictl inspect $container | jq -r '.info.pid')
         # mount /proc
         for file in meminfo cpuinfo loadavg stat diskstats swaps uptime; do
-            echo nsenter --target $PID --mount -- /bin/mount -o remount,bind  -t proc "$LXCFS/proc/$file" "/proc/$file"
+            echo nsenter --target $PID --mount -- /bin/mount -B  -t proc "$LXCFS/proc/$file" "/proc/$file"
             nsenter --target $PID --mount --  /bin/mount -B "$LXCFS/proc/$file" "/proc/$file"
         done
         
         # mount /sys
         for file in online; do
-            echo nsenter --target $PID --mount -- /bin/mount -o remount,bind "$LXCFS/sys/devices/system/cpu/$file" "/sys/devices/system/cpu/$file"
+            echo nsenter --target $PID --mount -- /bin/mount -B "$LXCFS/sys/devices/system/cpu/$file" "/sys/devices/system/cpu/$file"
             nsenter --target $PID --mount -- /bin/mount -B "$LXCFS/sys/devices/system/cpu/$file" "/sys/devices/system/cpu/$file"
         done 
     else
-        echo "容器 $container 没有挂载 /var/lib/lxcfs"
+        echo "容器 $container 没有挂载 /var/lib/lxc/lxcfs"
     fi
 done
