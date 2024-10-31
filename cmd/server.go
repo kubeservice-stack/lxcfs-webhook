@@ -77,5 +77,8 @@ func main() {
 	<-signalChan
 
 	glog.Infof("Got OS shutdown signal, shutting down webhook server gracefully...")
-	whsvr.Server.Shutdown(context.Background())
+	err = whsvr.Server.Shutdown(context.Background())
+	if err != nil {
+		glog.Errorf("server shutdown: %v", err)
+	}
 }
