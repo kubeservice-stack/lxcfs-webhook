@@ -1,5 +1,5 @@
 # Build the manager binary
-FROM golang:1.19.13-alpine as builder
+FROM golang:1.22.8-alpine AS builder
 
 RUN apk add --no-cache gcc musl-dev libc6-compat build-base libc-dev
 
@@ -15,7 +15,7 @@ COPY pkg/ pkg/
 COPY vendor/ vendor/
 
 # Build
-RUN CGO_ENABLED=0 GOOS=linux go build -a -ldflags "-linkmode external -extldflags -static" -o webhook-server ./cmd/server.go
+RUN CGO_ENABLED=0 GOOS=linux go build -a -o webhook-server ./cmd/server.go
 
 
 FROM alpine

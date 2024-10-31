@@ -21,19 +21,6 @@ import (
 	"k8s.io/utils/ptr"
 )
 
-const (
-	defaultAnnotation = "initializer.kubernetes.io/lxcfs"
-	defaultNamespace  = "default"
-)
-
-var (
-	annotation        string
-	configmap         string
-	initializerName   string
-	namespace         string
-	requireAnnotation bool
-)
-
 // -v /var/lib/lxc/lxcfs/proc/cpuinfo:/proc/cpuinfo:ro
 // -v /var/lib/lxc/lxcfs/proc/diskstats:/proc/diskstats:ro
 // -v /var/lib/lxc/lxcfs/proc/meminfo:/proc/meminfo:ro
