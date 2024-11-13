@@ -14,7 +14,7 @@ for container in $containers; do
     echo "$mounts" | grep  "$LXCFS/"
     if [ $? -eq 0 ]; then
         echo "remount $container"
-        PID=$(crictl inspect $container | jq -r '.info.pid')
+        PID=$(crictl inspect --output go-template --template '{{- .info.pid -}}' $container)
         # mount /proc
         for file in meminfo cpuinfo loadavg stat diskstats swaps uptime; do
             echo nsenter --target $PID --mount -- /bin/mount -B  -t proc "$LXCFS/proc/$file" "/proc/$file"
