@@ -5,7 +5,7 @@ LXCFS="/var/lib/lxc/lxcfs"
 containers=$(crictl ps | grep -v pause  | grep -v calico | grep -v cilium  |awk '{print $1}' | grep -v CONTAINER)
 for container in $containers; do
     # 获取挂载点信息
-    mounts=$(crictl inspect $container | jq -r '.info.config.mounts[] | "\(.container_path) -> \(.host_path)"' | grep "$LXCFS/")
+    mounts=$(crictl inspect -o go-template --template='{{range .info.config.mounts}}{{.container_path}} -> {{.host_path}}{{end}}' $container | grep "$LXCFS/")
     
     echo "Mounts for container $container:"
     echo "$mounts"
