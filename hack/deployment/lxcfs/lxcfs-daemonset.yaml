@@ -25,10 +25,20 @@ spec:
         env:
         - name: CONTAINER_REMOUNT_LXCFS
           value: ICAgICMhL2Jpbi9iYXNoICt4CgogICAgTFhDRlM9Ii92YXIvbGliL2x4Yy9seGNmcyIKCiAgICBjb250YWluZXJzPSQoY3JpY3RsIHBzIHwgZ3JlcCAtdiBwYXVzZSAgfCBncmVwIC12IGNhbGljbyB8IGdyZXAgLXYgY2lsaXVtICB8YXdrICd7cHJpbnQgJDF9JyB8IGdyZXAgLXYgQ09OVEFJTkVSKQogICAgZm9yIGNvbnRhaW5lciBpbiAkY29udGFpbmVyczsgZG8KICAgICAgICAjIOiOt+WPluaMgui9veeCueS/oeaBrwogICAgICAgIG1vdW50cz0kKGNyaWN0bCBpbnNwZWN0ICRjb250YWluZXIgfCBqcSAtciAnLmluZm8uY29uZmlnLm1vdW50c1tdIHwgIlwoLmNvbnRhaW5lcl9wYXRoKSAtPiBcKC5ob3N0X3BhdGgpIicgfCBncmVwICIkTFhDRlMvIikKCiAgICAgICAgZWNobyAiTW91bnRzIGZvciBjb250YWluZXIgJGNvbnRhaW5lcjoiCiAgICAgICAgZWNobyAiJG1vdW50cyIKCiAgICAgICAgIyDmo4Dmn6XmmK/lkKbmnInmjILovb3liLAgTFhDRlMg6Lev5b6ECiAgICAgICAgZWNobyAiJG1vdW50cyIgfCBncmVwICAiJExYQ0ZTLyIKICAgICAgICBpZiBbICQ/IC1lcSAwIF07IHRoZW4KICAgICAgICAgICAgZWNobyAicmVtb3VudCAkY29udGFpbmVyIgogICAgICAgICAgICBQSUQ9JChjcmljdGwgaW5zcGVjdCAkY29udGFpbmVyIHwganEgLXIgJy5pbmZvLnBpZCcpCiAgICAgICAgICAgICMgbW91bnQgL3Byb2MKICAgICAgICAgICAgZm9yIGZpbGUgaW4gbWVtaW5mbyBjcHVpbmZvIGxvYWRhdmcgc3RhdCBkaXNrc3RhdHMgc3dhcHMgdXB0aW1lOyBkbwogICAgICAgICAgICAgICAgZWNobyBuc2VudGVyIC0tdGFyZ2V0ICRQSUQgLS1tb3VudCAtLSAvYmluL21vdW50IC1vIHJlbW91bnQsYmluZCAgLXQgcHJvYyAiJExYQ0ZTL3Byb2MvJGZpbGUiICIvcHJvYy8kZmlsZSIKICAgICAgICAgICAgICAgIG5zZW50ZXIgLS10YXJnZXQgJFBJRCAtLW1vdW50IC0tICAvYmluL21vdW50IC1CICIkTFhDRlMvcHJvYy8kZmlsZSIgIi9wcm9jLyRmaWxlIgogICAgICAgICAgICBkb25lCgogICAgICAgICAgICAjIG1vdW50IC9zeXMKICAgICAgICAgICAgZm9yIGZpbGUgaW4gb25saW5lOyBkbwogICAgICAgICAgICAgICAgZWNobyBuc2VudGVyIC0tdGFyZ2V0ICRQSUQgLS1tb3VudCAtLSAvYmluL21vdW50IC1vIHJlbW91bnQsYmluZCAiJExYQ0ZTL3N5cy9kZXZpY2VzL3N5c3RlbS9jcHUvJGZpbGUiICIvc3lzL2RldmljZXMvc3lzdGVtL2NwdS8kZmlsZSIKICAgICAgICAgICAgICAgIG5zZW50ZXIgLS10YXJnZXQgJFBJRCAtLW1vdW50IC0tIC9iaW4vbW91bnQgLUIgIiRMWENGUy9zeXMvZGV2aWNlcy9zeXN0ZW0vY3B1LyRmaWxlIiAiL3N5cy9kZXZpY2VzL3N5c3RlbS9jcHUvJGZpbGUiCiAgICAgICAgICAgIGRvbmUKICAgICAgICBlbHNlCiAgICAgICAgICAgIGVjaG8gIuWuueWZqCAkY29udGFpbmVyIOayoeacieaMgui9vSAvdmFyL2xpYi9seGMvbHhjZnMiCiAgICAgICAgZmkKICAgIGRvbmUK
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
         lifecycle:
           postStart:
             exec:
-              command: ["bash", "-c", "echo ${CONTAINER_REMOUNT_LXCFS} > /opt/container_remount_lxcfs.sh ; ./opt/container_remount_lxcfs.sh  2> /opt/lxcfs.log"]
+              command: ["bash", "-c", "echo ${CONTAINER_REMOUNT_LXCFS} > /opt/container_remount_lxcfs.sh ; ./opt/container_remount_lxcfs.sh > /opt/log/lxcfs.log"]
         securityContext:
           privileged: true
         volumeMounts:
@@ -41,6 +51,9 @@ spec:
           mountPath: /usr/local
         - name: usr-lib64
           mountPath: /usr/lib64
+        - mountPath: /opt/log/
+          name: datalog
+          subPathExpr: $(NAMESPACE)/$(POD_NAME)
       volumes:
       - name: cgroup
         hostPath:
@@ -55,3 +68,6 @@ spec:
         hostPath:
           path: /var/lib/lxc/lxcfs
           type: DirectoryOrCreate
+      - hostPath:
+          path: /data/log
+        name: datalog
