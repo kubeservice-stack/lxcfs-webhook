@@ -14,13 +14,14 @@ for container in $containers;do
 		PID=$(docker inspect --format '{{.State.Pid}}' $container)
 		# mount /proc
 		for file in meminfo cpuinfo loadavg stat diskstats swaps uptime;do
-			echo nsenter --target $PID --mount --  mount -B "$LXCFS/proc/$file" "/proc/$file"
-			nsenter --target $PID --mount --  /bin/mount -B "$LXCFS/proc/$file" "/proc/$file"
+			echo nsenter --target $PID --mount -- mount -B "$LXCFS/proc/$file" "/proc/$file"
+			nsenter --target $PID --mount -- mount -B "$LXCFS/proc/$file" "/proc/$file"
 		done
 		# mount /sys
 		for file in online;do
-			echo nsenter --target $PID --mount --  mount -B "$LXCFS/sys/devices/system/cpu/$file" "/sys/devices/system/cpu/$file"
-			nsenter --target $PID --mount --  /bin/mount -B "$LXCFS/sys/devices/system/cpu/$file" "/sys/devices/system/cpu/$file"
+			echo nsenter --target $PID --mount -- mount -B "$LXCFS/sys/devices/system/cpu/$file" "/sys/devices/system/cpu/$file"
+			nsenter --target $PID --mount -- mount -B "$LXCFS/sys/devices/system/cpu/$file" "/sys/devices/system/cpu/$file"
 		done 
 	fi 
 done
+exit 0
