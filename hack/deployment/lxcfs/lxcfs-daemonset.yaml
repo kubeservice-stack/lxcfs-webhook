@@ -24,11 +24,22 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: CONTAINER_REMOUNT_LXCFS
-          value: ICAgICMhL2Jpbi9iYXNoICt4CgogICAgTFhDRlM9Ii92YXIvbGliL2x4Yy9seGNmcyIKCiAgICBjb250YWluZXJzPSQoY3JpY3RsIHBzIHwgZ3JlcCAtdiBwYXVzZSAgfCBncmVwIC12IGNhbGljbyB8IGdyZXAgLXYgY2lsaXVtICB8YXdrICd7cHJpbnQgJDF9JyB8IGdyZXAgLXYgQ09OVEFJTkVSKQogICAgZm9yIGNvbnRhaW5lciBpbiAkY29udGFpbmVyczsgZG8KICAgICAgICAjIOiOt+WPluaMgui9veeCueS/oeaBrwogICAgICAgIG1vdW50cz0kKGNyaWN0bCBpbnNwZWN0ICRjb250YWluZXIgfCBqcSAtciAnLmluZm8uY29uZmlnLm1vdW50c1tdIHwgIlwoLmNvbnRhaW5lcl9wYXRoKSAtPiBcKC5ob3N0X3BhdGgpIicgfCBncmVwICIkTFhDRlMvIikKCiAgICAgICAgZWNobyAiTW91bnRzIGZvciBjb250YWluZXIgJGNvbnRhaW5lcjoiCiAgICAgICAgZWNobyAiJG1vdW50cyIKCiAgICAgICAgIyDmo4Dmn6XmmK/lkKbmnInmjILovb3liLAgTFhDRlMg6Lev5b6ECiAgICAgICAgZWNobyAiJG1vdW50cyIgfCBncmVwICAiJExYQ0ZTLyIKICAgICAgICBpZiBbICQ/IC1lcSAwIF07IHRoZW4KICAgICAgICAgICAgZWNobyAicmVtb3VudCAkY29udGFpbmVyIgogICAgICAgICAgICBQSUQ9JChjcmljdGwgaW5zcGVjdCAkY29udGFpbmVyIHwganEgLXIgJy5pbmZvLnBpZCcpCiAgICAgICAgICAgICMgbW91bnQgL3Byb2MKICAgICAgICAgICAgZm9yIGZpbGUgaW4gbWVtaW5mbyBjcHVpbmZvIGxvYWRhdmcgc3RhdCBkaXNrc3RhdHMgc3dhcHMgdXB0aW1lOyBkbwogICAgICAgICAgICAgICAgZWNobyBuc2VudGVyIC0tdGFyZ2V0ICRQSUQgLS1tb3VudCAtLSAvYmluL21vdW50IC1vIHJlbW91bnQsYmluZCAgLXQgcHJvYyAiJExYQ0ZTL3Byb2MvJGZpbGUiICIvcHJvYy8kZmlsZSIKICAgICAgICAgICAgICAgIG5zZW50ZXIgLS10YXJnZXQgJFBJRCAtLW1vdW50IC0tICAvYmluL21vdW50IC1CICIkTFhDRlMvcHJvYy8kZmlsZSIgIi9wcm9jLyRmaWxlIgogICAgICAgICAgICBkb25lCgogICAgICAgICAgICAjIG1vdW50IC9zeXMKICAgICAgICAgICAgZm9yIGZpbGUgaW4gb25saW5lOyBkbwogICAgICAgICAgICAgICAgZWNobyBuc2VudGVyIC0tdGFyZ2V0ICRQSUQgLS1tb3VudCAtLSAvYmluL21vdW50IC1vIHJlbW91bnQsYmluZCAiJExYQ0ZTL3N5cy9kZXZpY2VzL3N5c3RlbS9jcHUvJGZpbGUiICIvc3lzL2RldmljZXMvc3lzdGVtL2NwdS8kZmlsZSIKICAgICAgICAgICAgICAgIG5zZW50ZXIgLS10YXJnZXQgJFBJRCAtLW1vdW50IC0tIC9iaW4vbW91bnQgLUIgIiRMWENGUy9zeXMvZGV2aWNlcy9zeXN0ZW0vY3B1LyRmaWxlIiAiL3N5cy9kZXZpY2VzL3N5c3RlbS9jcHUvJGZpbGUiCiAgICAgICAgICAgIGRvbmUKICAgICAgICBlbHNlCiAgICAgICAgICAgIGVjaG8gIuWuueWZqCAkY29udGFpbmVyIOayoeacieaMgui9vSAvdmFyL2xpYi9seGMvbHhjZnMiCiAgICAgICAgZmkKICAgIGRvbmUK
+          # containerd script 
+          value: IyEvYmluL2Jhc2ggK3gKCkxYQ0ZTPSIvdmFyL2xpYi9seGMvbHhjZnMiCgpjb250YWluZXJzPSQoY3JpY3RsIHBzIHwgZ3JlcCAtdiBwYXVzZSAgfCBncmVwIC12IGNhbGljbyB8IGdyZXAgLXYgY2lsaXVtICB8YXdrICd7cHJpbnQgJDF9JyB8IGdyZXAgLXYgQ09OVEFJTkVSKQpmb3IgY29udGFpbmVyIGluICRjb250YWluZXJzOyBkbwogICAgIyDojrflj5bmjILovb3ngrnkv6Hmga8KICAgIG1vdW50cz0kKGNyaWN0bCBpbnNwZWN0IC1vIGdvLXRlbXBsYXRlIC0tdGVtcGxhdGU9J3t7cmFuZ2UgLmluZm8uY29uZmlnLm1vdW50c319e3suY29udGFpbmVyX3BhdGh9fSAtPiB7ey5ob3N0X3BhdGh9fXt7cHJpbnRsbn19e3tlbmR9fScgJGNvbnRhaW5lciB8IGdyZXAgIiRMWENGUy8iKQogICAgCiAgICBlY2hvICJNb3VudHMgZm9yIGNvbnRhaW5lciAkY29udGFpbmVyOiIKICAgIGVjaG8gIiRtb3VudHMiCiAgICAKICAgICMg5qOA5p+l5piv5ZCm5pyJ5oyC6L295YiwIExYQ0ZTIOi3r+W+hAogICAgY291bnQ9JChlY2hvICIkbW91bnRzIiB8IGdyZXAgICIkTFhDRlMvIiB8IHdjIC1sKQogICAgaWYgWyAiJGNvdW50IiAhPSAiMCIgXTsgdGhlbgogICAgICAgIGVjaG8gInJlbW91bnQgJGNvbnRhaW5lciIKICAgICAgICBQSUQ9JChjcmljdGwgaW5zcGVjdCAtLW91dHB1dCBnby10ZW1wbGF0ZSAtLXRlbXBsYXRlICd7ey0gLmluZm8ucGlkIC19fScgJGNvbnRhaW5lcikKICAgICAgICAjIG1vdW50IC9wcm9jCiAgICAgICAgZm9yIGZpbGUgaW4gbWVtaW5mbyBjcHVpbmZvIGxvYWRhdmcgc3RhdCBkaXNrc3RhdHMgc3dhcHMgdXB0aW1lOyBkbwogICAgICAgICAgICBlY2hvIG5zZW50ZXIgLS10YXJnZXQgJFBJRCAtLW1vdW50IC0tIG1vdW50IC1CICIkTFhDRlMvcHJvYy8kZmlsZSIgIi9wcm9jLyRmaWxlIgogICAgICAgICAgICBuc2VudGVyIC0tdGFyZ2V0ICRQSUQgLS1tb3VudCAtLSBtb3VudCAtQiAiJExYQ0ZTL3Byb2MvJGZpbGUiICIvcHJvYy8kZmlsZSIKICAgICAgICBkb25lCgogICAgICAgICMgbW91bnQgL3N5cwogICAgICAgIGZvciBmaWxlIGluIG9ubGluZTsgZG8KICAgICAgICAgICAgZWNobyBuc2VudGVyIC0tdGFyZ2V0ICRQSUQgLS1tb3VudCAtLSBtb3VudCAtQiAiJExYQ0ZTL3N5cy9kZXZpY2VzL3N5c3RlbS9jcHUvJGZpbGUiICIvc3lzL2RldmljZXMvc3lzdGVtL2NwdS8kZmlsZSIKICAgICAgICAgICAgbnNlbnRlciAtLXRhcmdldCAkUElEIC0tbW91bnQgLS0gbW91bnQgLUIgIiRMWENGUy9zeXMvZGV2aWNlcy9zeXN0ZW0vY3B1LyRmaWxlIiAiL3N5cy9kZXZpY2VzL3N5c3RlbS9jcHUvJGZpbGUiCiAgICAgICAgZG9uZQogICAgZWxzZQogICAgICAgIGVjaG8gIuWuueWZqCAkY29udGFpbmVyIOayoeacieaMgui9vSAvdmFyL2xpYi9seGMvbHhjZnMiCiAgICBmaQpkb25lCmV4aXQgMA==
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
         lifecycle:
           postStart:
             exec:
-              command: ["bash", "-c", "echo ${CONTAINER_REMOUNT_LXCFS} > /opt/container_remount_lxcfs.sh ; ./opt/container_remount_lxcfs.sh  2> /opt/lxcfs.log"]
+              command: ["bash", "-c", "echo ${CONTAINER_REMOUNT_LXCFS} | base64 -d > /opt/container_remount_lxcfs.sh ; chmod u+x /opt/container_remount_lxcfs.sh; ./opt/container_remount_lxcfs.sh > /opt/log/lxcfs.log"]
         securityContext:
           privileged: true
         volumeMounts:
@@ -41,6 +52,9 @@ spec:
           mountPath: /usr/local
         - name: usr-lib64
           mountPath: /usr/lib64
+        - mountPath: /opt/log/
+          name: datalog
+          subPathExpr: $(NAMESPACE)/$(POD_NAME)
       volumes:
       - name: cgroup
         hostPath:
@@ -55,3 +69,6 @@ spec:
         hostPath:
           path: /var/lib/lxc/lxcfs
           type: DirectoryOrCreate
+      - hostPath:
+          path: /data/log
+        name: datalog
