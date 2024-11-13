@@ -25,6 +25,7 @@ for container in $containers; do
         for file in online; do
             echo nsenter --target $PID --mount -- mount -B "$LXCFS/sys/devices/system/cpu/$file" "/sys/devices/system/cpu/$file"
             nsenter --target $PID --mount -- mount -B "$LXCFS/sys/devices/system/cpu/$file" "/sys/devices/system/cpu/$file"
+        done
     else
         echo "容器 $container 没有挂载 /var/lib/lxc/lxcfs"
     fi
