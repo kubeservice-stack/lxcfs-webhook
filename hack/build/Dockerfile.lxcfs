@@ -1,6 +1,8 @@
-FROM centos:7
-RUN yum -y update
-RUN yum -y install fuse-devel pam-devel wget install gcc automake autoconf libtool make
+FROM ubuntu:18.04 as build
+RUN apt update -y
+RUN apt-get --purge remove lxcfs
+RUN apt install -y wget git libtool m4 autotools-dev automake pkg-config build-essential libfuse-dev libcurl4-openssl-dev libxml2-dev mime-support
+
 ENV LXCFS_VERSION 4.0.12
 RUN wget https://github.com/lxc/lxcfs/archive/lxcfs-$LXCFS_VERSION.tar.gz && \
     mkdir /lxcfs && tar xzvf lxcfs-$LXCFS_VERSION.tar.gz -C /lxcfs --strip-components=1 && \
