@@ -1,4 +1,10 @@
-FROM ghcr.io/kubeservice-stack/lxcfs:v4.0.12
+FROM centos:8
+RUN yum -y update
+RUN yum -y install fuse-devel pam-devel wget install gcc automake autoconf libtool make
 ENV LXCFS_VERSION 4.0.12
+RUN wget https://github.com/lxc/lxcfs/archive/lxcfs-$LXCFS_VERSION.tar.gz && \
+    mkdir /lxcfs && tar xzvf lxcfs-$LXCFS_VERSION.tar.gz -C /lxcfs --strip-components=1 && \
+    cd /lxcfs  && ./bootstrap.sh && ./configure && make
 
 COPY ./hack/build/start.sh /
+CMD ["/start.sh"]
