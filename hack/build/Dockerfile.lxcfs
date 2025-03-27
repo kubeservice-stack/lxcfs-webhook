@@ -1,6 +1,6 @@
 FROM alpine:3.21
 
-RUN apk add --no-cache wget git libtool m4 autoconf automake pkg-config gcc g++ make libfuse-dev libcurl-dev libxml2-dev mime-support
+RUN apk add --no-cache wget git libtool m4 autoconf automake pkgconfig gcc g++ make fuse-dev
 
 ENV LXCFS_VERSION=4.0.12
 RUN wget https://github.com/lxc/lxcfs/archive/lxcfs-$LXCFS_VERSION.tar.gz && \
