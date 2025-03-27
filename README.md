@@ -73,5 +73,24 @@ sudo ln -s /usr/lib64/libtinfo.so.6.1 /usr/lib64/libtinfo.so.5
 ### 问题二
 [Kubernetes LXCFS故障恢复后，对现有Pod 进行 remount 操作](https://kubeservice.cn/2022/04/13/k8s-lxcfs-remount/)
 
+### 问题三
+Node节点的glibc支持的GLIBC版本问题，要求支持`GLIBC_2.23`以上
+```
+$ strings /lib64/libc.so.6 | grep GLIBC_
+GLIBC_2.16
+GLIBC_2.17
+GLIBC_2.18
+GLIBC_2.22
+GLIBC_2.23
+GLIBC_2.24
+GLIBC_2.25
+GLIBC_2.26
+GLIBC_2.27
+GLIBC_2.28
+GLIBC_2.29
+GLIBC_2.30
+GLIBC_PRIVATE
+```
+
 ## License
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkubeservice-stack%2Flxcfs-webhook.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkubeservice-stack%2Flxcfs-webhook?ref=badge_large)
