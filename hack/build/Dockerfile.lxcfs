@@ -1,11 +1,6 @@
-FROM alpine:3.21
+FROM alpine:3.16
 
-RUN apk add --no-cache wget git libtool m4 autoconf automake pkgconfig gcc g++ make fuse-dev linux-headers
-
-ENV LXCFS_VERSION=4.0.12
-RUN wget https://github.com/lxc/lxcfs/archive/lxcfs-$LXCFS_VERSION.tar.gz && \
-    mkdir /lxcfs && tar xzvf lxcfs-$LXCFS_VERSION.tar.gz -C /lxcfs --strip-components=1 && \
-    cd /lxcfs  && ./bootstrap.sh && ./configure && make
+RUN apk add --no-cache wget git libtool m4 autoconf automake pkgconfig gcc g++ make fuse-dev linux-headers lxcfs
 
 COPY ./hack/build/start.sh /
 CMD ["/start.sh"]
