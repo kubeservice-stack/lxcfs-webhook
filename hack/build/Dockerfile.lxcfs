@@ -1,4 +1,4 @@
-FROM ubuntu:12.04
+FROM ubuntu:14.04
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update -y
 RUN apt-get --purge remove lxcfs
