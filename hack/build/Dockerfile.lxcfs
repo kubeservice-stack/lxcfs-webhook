@@ -1,4 +1,4 @@
-FROM alpine:3.15
+FROM alpine:3.21
 
 RUN apk add --no-cache wget git libtool m4 autoconf automake pkg-config gcc g++ make libfuse-dev libcurl-dev libxml2-dev mime-support
 
