@@ -2,7 +2,7 @@ FROM ubuntu:12.04
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update -y
 RUN apt-get --purge remove lxcfs
-RUN apt install -y wget git libtool m4 autotools-dev automake pkg-config build-essential libfuse-dev libcurl4-openssl-dev libxml2-dev mime-support libc6
+RUN apt install -y wget git libtool m4 autotools-dev automake pkg-config build-essential libfuse-dev libcurl4-openssl-dev libxml2-dev mime-support
 
 ENV LXCFS_VERSION=4.0.12
 RUN wget https://github.com/lxc/lxcfs/archive/lxcfs-$LXCFS_VERSION.tar.gz && \
