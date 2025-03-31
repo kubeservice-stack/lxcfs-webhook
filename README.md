@@ -92,5 +92,11 @@ GLIBC_2.30
 GLIBC_PRIVATE
 ```
 
+PS: 如果glibc支持的版本只能到2.17, 请使用旧版本镜像
+```
+$ docker pull ghcr.io/kubeservice-stack/lxcfs:v4.0.12
+$ docker pull ghcr.io/kubeservice-stack/lxcfs-webhook:latest
+```
+
 ## License
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkubeservice-stack%2Flxcfs-webhook.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkubeservice-stack%2Flxcfs-webhook?ref=badge_large)
