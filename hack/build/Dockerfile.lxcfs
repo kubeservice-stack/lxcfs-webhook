@@ -11,5 +11,3 @@ RUN wget https://github.com/lxc/lxcfs/archive/refs/tags/v$LXCFS_VERSION.tar.gz -
 
 COPY ./hack/build/start.sh /
 CMD ["/start.sh"]
-
-https://github.com/lxc/lxcfs/archive/refs/tags/v$LXCFS_VERSION.tar.gz
