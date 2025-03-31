@@ -10,6 +10,7 @@ mkdir -p /usr/local/lib/lxcfs /var/lib/lxc/lxcfs
 
 # Update lxcfs
 cp -f /lxcfs/build/lxcfs /usr/local/bin/lxcfs
+rm -rf /usr/local/lib/lxcfs/liblxcfs.so
 cp -f /lxcfs/build/liblxcfs.so /usr/local/lib/lxcfs/liblxcfs.so
 
 

@@ -9,7 +9,7 @@ RUN pip3 install -U Jinja2
 ENV LXCFS_VERSION=6.0.3
 RUN wget https://github.com/lxc/lxcfs/archive/refs/tags/v$LXCFS_VERSION.tar.gz && \
     mkdir /lxcfs && tar xzvf v$LXCFS_VERSION.tar.gz -C /lxcfs --strip-components=1 && \
-    cd /lxcfs && make
+    cd /lxcfs && make && make install
 
 COPY ./hack/build/start.sh /
 CMD ["/start.sh"]
