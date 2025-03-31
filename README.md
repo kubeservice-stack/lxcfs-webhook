@@ -75,6 +75,12 @@ sudo ln -s /usr/lib64/libtinfo.so.6.1 /usr/lib64/libtinfo.so.5
 
 ### 问题三
 Node节点的glibc支持的GLIBC版本问题，要求支持`GLIBC_2.23`以上
+
+| lxcfs | GLIBC version |
+| ----- | ------------- |
+| v4.0.12 | GLIBC_2.23 |
+| v6.0.3  | GLIBC_2.31 |
+
 ```
 $ strings /lib64/libc.so.6 | grep GLIBC_
 GLIBC_2.16

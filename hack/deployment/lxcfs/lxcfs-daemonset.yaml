@@ -20,7 +20,7 @@ spec:
         effect: NoSchedule
       containers:
       - name: lxcfs
-        image: dongjiang1989/lxcfs:v4.0.12
+        image: dongjiang1989/lxcfs:v6.0.3
         imagePullPolicy: IfNotPresent
         env:
         - name: CONTAINER_REMOUNT_LXCFS

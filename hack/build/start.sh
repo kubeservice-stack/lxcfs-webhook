@@ -9,9 +9,9 @@ nsenter -m/proc/1/ns/mnt [ -L /etc/mtab ] || \
 mkdir -p /usr/local/lib/lxcfs /var/lib/lxc/lxcfs
 
 # Update lxcfs
-cp -f /lxcfs/src/lxcfs /usr/local/bin/lxcfs
-cp -f /lxcfs/src/.libs/liblxcfs.so /usr/local/lib/lxcfs/liblxcfs.so
-cp -f /lxcfs/src/liblxcfs.la /usr/local/lib/lxcfs/liblxcfs.la
+cp -f /lxcfs/build/lxcfs /usr/local/bin/lxcfs
+rm -rf /usr/local/lib/lxcfs/liblxcfs.so
+cp -f /lxcfs/build/liblxcfs.so /usr/local/lib/lxcfs/liblxcfs.so
 
 
 # Mount

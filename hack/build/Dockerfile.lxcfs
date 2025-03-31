@@ -1,13 +1,15 @@
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update -y
 RUN apt-get --purge remove lxcfs
-RUN apt install -y wget git libtool m4 autotools-dev automake pkg-config build-essential libfuse-dev libcurl4-openssl-dev libxml2-dev mime-support
+RUN apt install -y meson systemd help2man fuse3 cmake python3-pip wget git libtool m4 autotools-dev automake pkg-config build-essential libfuse-dev libcurl4-openssl-dev libxml2-dev mime-support
 
-ENV LXCFS_VERSION=4.0.12
-RUN wget https://github.com/lxc/lxcfs/archive/lxcfs-$LXCFS_VERSION.tar.gz && \
-    mkdir /lxcfs && tar xzvf lxcfs-$LXCFS_VERSION.tar.gz -C /lxcfs --strip-components=1 && \
-    cd /lxcfs  && ./bootstrap.sh && ./configure && make
+RUN pip3 install -U Jinja2
+
+ENV LXCFS_VERSION=6.0.3
+RUN wget https://github.com/lxc/lxcfs/archive/refs/tags/v$LXCFS_VERSION.tar.gz && \
+    mkdir /lxcfs && tar xzvf v$LXCFS_VERSION.tar.gz -C /lxcfs --strip-components=1 && \
+    cd /lxcfs && make && make install
 
 COPY ./hack/build/start.sh /
 CMD ["/start.sh"]
