@@ -2,7 +2,7 @@ FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update -y
 RUN apt-get --purge remove lxcfs
-RUN apt install -y meson help2man python3-pip wget git libtool m4 autotools-dev automake pkg-config build-essential libfuse-dev libcurl4-openssl-dev libxml2-dev mime-support
+RUN apt install -y meson systemd help2man fuse3 cmake python3-pip wget git libtool m4 autotools-dev automake pkg-config build-essential libfuse-dev libcurl4-openssl-dev libxml2-dev mime-support
 
 RUN pip3 install -U Jinja2
 
