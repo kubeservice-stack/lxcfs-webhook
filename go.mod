@@ -2,8 +2,6 @@ module github.com/kubeservice-stack/lxcfs-webhook
 
 go 1.24.0
 
-toolchain go1.24.0
-
 require (
 	github.com/evanphx/json-patch v5.9.11+incompatible
 	github.com/golang/glog v1.2.4
