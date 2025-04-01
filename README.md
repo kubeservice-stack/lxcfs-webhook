@@ -26,6 +26,7 @@ Pod 容器内资源可见性：让Pod的资源视角真实、准确
 * Kubernetes: >= `1.16.0`
 * cert-manager (v1.2+) is installed.
 * helm v3 is installed.
+* glibc 2.28+
 
 ## 部署
 
