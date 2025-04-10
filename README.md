@@ -77,11 +77,11 @@ sudo ln -s /usr/lib64/libtinfo.so.6.1 /usr/lib64/libtinfo.so.5
 ### 问题三
 Node节点的glibc支持的GLIBC版本问题，要求支持`GLIBC_2.23`以上
 
-| lxcfs | GLIBC version |
-| ----- | ------------- |
-| [v4.0.12-ubuntu16.04](https://hub.docker.com/r/dongjiang1989/lxcfs/tags) | GLIBC_2.23 |
-| [v4.0.12-centos](https://github.com/kubeservice-stack/lxcfs-webhook/pkgs/container/lxcfs) | GLIBC_2.17 |
-| [v6.0.3-ubuntu20.04](https://hub.docker.com/r/dongjiang1989/lxcfs/tags)  | GLIBC_2.31 |
+| lxcfs | GLIBC version |  |
+| ----- | ------------- | ------------- |
+| [v4.0.12-ubuntu16.04](https://hub.docker.com/r/dongjiang1989/lxcfs/tags) | GLIBC_2.23 | - |
+| [v4.0.12-centos](https://github.com/kubeservice-stack/lxcfs-webhook/pkgs/container/lxcfs) | GLIBC_2.17 | - |
+| [v6.0.3-ubuntu20.04](https://hub.docker.com/r/dongjiang1989/lxcfs/tags)  | GLIBC_2.31 | 支持fuse3 or fuse2.9.9+|
 
 ```
 $ strings /lib64/libc.so.6 | grep GLIBC_
