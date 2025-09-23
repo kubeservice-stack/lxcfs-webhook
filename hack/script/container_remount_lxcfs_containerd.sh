@@ -15,17 +15,21 @@ for container in $containers; do
     if [ "$count" != "0" ]; then
         echo "remount $container"
         PID=$(crictl inspect --output go-template --template '{{- .info.pid -}}' $container)
-        # mount /proc
-        for file in meminfo cpuinfo loadavg stat diskstats swaps uptime; do
-            echo nsenter --target $PID --mount -- mount -B "$LXCFS/proc/$file" "/proc/$file"
-            nsenter --target $PID --mount -- mount -B "$LXCFS/proc/$file" "/proc/$file"
-        done
+        if nsenter --target $PID --mount -- -- which mount >/dev/null 2>&1; then
+            # mount /proc
+            for file in meminfo cpuinfo loadavg stat diskstats swaps uptime; do
+                echo nsenter --target $PID --mount -- mount -o bind "$LXCFS/proc/$file" "/proc/$file"
+                nsenter --target $PID --mount -- mount -o bind "$LXCFS/proc/$file" "/proc/$file"
+            done
 
-        # mount /sys
-        for file in online; do
-            echo nsenter --target $PID --mount -- mount -B "$LXCFS/sys/devices/system/cpu/$file" "/sys/devices/system/cpu/$file"
-            nsenter --target $PID --mount -- mount -B "$LXCFS/sys/devices/system/cpu/$file" "/sys/devices/system/cpu/$file"
-        done
+            # mount /sys
+            for file in online; do
+                echo nsenter --target $PID --mount -- mount -o bind "$LXCFS/sys/devices/system/cpu/$file" "/sys/devices/system/cpu/$file"
+                nsenter --target $PID --mount -- mount -o bind "$LXCFS/sys/devices/system/cpu/$file" "/sys/devices/system/cpu/$file"
+            done
+        else
+            echo "容器 $container 没有 mount 软件"
+        fi
     else
         echo "容器 $container 没有挂载 /var/lib/lxc/lxcfs"
     fi
