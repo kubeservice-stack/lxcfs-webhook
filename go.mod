@@ -7,7 +7,7 @@ require (
 	github.com/golang/glog v1.2.4
 	k8s.io/api v0.32.2
 	k8s.io/apimachinery v0.32.2
-	k8s.io/kubernetes v1.32.2
+	k8s.io/kubernetes v1.32.7
 	k8s.io/utils v0.0.0-20241104100929-3ea5e8cea738
 )
 
