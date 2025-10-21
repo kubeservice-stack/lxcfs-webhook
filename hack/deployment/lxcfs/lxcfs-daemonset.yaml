@@ -40,13 +40,16 @@ spec:
           postStart:
             exec:
               command: ["bash", "-c", "echo ${CONTAINER_REMOUNT_LXCFS} | base64 -d > /opt/container_remount_lxcfs.sh ; chmod u+x /opt/container_remount_lxcfs.sh; ./opt/container_remount_lxcfs.sh > /opt/log/lxcfs.log"]
+          preStop:
+            exec:
+              command: ["bash", "-c", "nsenter -m/proc/1/ns/mnt fusermount -u /var/lib/lxc/lxcfs 2> /dev/null || true"]
         securityContext:
           privileged: true
         volumeMounts:
         - name: cgroup
           mountPath: /sys/fs/cgroup
         - name: lxcfs
-          mountPath: /var/lib/lxcfs
+          mountPath: /var/lib/lxc/lxcfs
           mountPropagation: Bidirectional
         - name: usr-local
           mountPath: /usr/local
