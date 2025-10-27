@@ -4,7 +4,7 @@ go 1.24.0
 
 require (
 	github.com/evanphx/json-patch v5.9.11+incompatible
-	github.com/golang/glog v1.2.4
+	github.com/golang/glog v1.2.5
 	k8s.io/api v0.32.2
 	k8s.io/apimachinery v0.32.2
 	k8s.io/kubernetes v1.32.7
