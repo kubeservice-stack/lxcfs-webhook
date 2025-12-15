@@ -175,7 +175,7 @@ func (whsvr *WebhookServer) Serve(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("could not encode response: %v", err), http.StatusInternalServerError)
 		return
 	}
-	glog.Infof("Serve Response AdmissionReview: %v\n", string(resp))
+glog.Infof("Serve Response AdmissionReview: %v", string(resp))
 	glog.Infof("Ready to write response ...")
 	if _, err := w.Write(resp); err != nil {
 		glog.Errorf("Can't write response: %v", err)
